@@ -1,8 +1,8 @@
 import os
 
-lines_before = os.popen('find ./target | grep jar-with').readlines()[0]
+lines_before = len(os.popen('find ./codestore').readlines())
 os.popen('./syncer.sh').readlines()
-lines_after = os.popen('find ./target | grep jar-with').readlines()[0]
+lines_after = len(os.popen('find ./codestore').readlines())
 
 if lines_before != lines_after:
     os.popen('sudo reboot').readlines()
