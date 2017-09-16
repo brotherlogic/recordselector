@@ -16,22 +16,23 @@ import org.apache.commons.cli.Options;
 
 import com.github.brotherlogic.javaserver.JavaServer;
 
+import godiscogs.Godiscogs.Release;
 import io.grpc.BindableService;
 
-public class Runner extends JavaServer{
+public class Runner extends JavaServer {
 
 	MainDisplay mainDisplay = new MainDisplay();
-	
+
 	@Override
 	public String getServerName() {
 		return "RecordSelector";
 	}
-	
+
 	@Override
 	public List<BindableService> getServices() {
 		return new LinkedList<BindableService>();
 	}
-	
+
 	private void displayScreen() {
 		mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainDisplay.pack();
@@ -39,31 +40,50 @@ public class Runner extends JavaServer{
 		mainDisplay.revalidate();
 		mainDisplay.setVisible(true);
 	}
-	
-	public void localServe() {
-	EventQueue.invokeLater(new Runnable() {
-		@Override
-		public void run() {
-			displayScreen();
+
+	private void refreshDisplay() {
+		while (true) {
+			try {
+				Thread.sleep(60 * 1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
+			mainDisplay.showRelease(r);
 		}
-	});
 	}
-	
+
+	@Override
+	public void localServe() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				displayScreen();
+			}
+		});
+
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				refreshDisplay();
+			}
+		});
+	}
+
 	public static void main(String[] args) throws Exception {
 		Option optionHost = OptionBuilder.withLongOpt("server").hasArg().withDescription("Hostname of server")
 				.create("s");
 		Options options = new Options();
 		options.addOption(optionHost);
-		
+
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = parser.parse(options, args);
-		
+
 		String rServer = "192.168.86.42";
 		System.out.println("ARGS = " + Arrays.toString(args));
 		if (line.hasOption("server"))
 			rServer = line.getOptionValue("s");
 
-		
 		Runner r = new Runner();
 		r.Serve(rServer);
 	}
