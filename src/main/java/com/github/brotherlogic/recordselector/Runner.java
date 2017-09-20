@@ -1,11 +1,11 @@
 package com.github.brotherlogic.recordselector;
 
-import java.awt.EventQueue;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -34,6 +34,7 @@ public class Runner extends JavaServer {
 	}
 
 	private void displayScreen() {
+		System.out.println("DISPLAY");
 		mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainDisplay.pack();
 		mainDisplay.setLocationRelativeTo(null);
@@ -43,31 +44,32 @@ public class Runner extends JavaServer {
 
 	private void refreshDisplay() {
 		while (true) {
+			Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
+			mainDisplay.showRelease(r);
 			try {
 				Thread.sleep(60 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
-			mainDisplay.showRelease(r);
 		}
 	}
 
 	@Override
 	public void localServe() {
-		EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				displayScreen();
 			}
 		});
 
-		EventQueue.invokeLater(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				refreshDisplay();
 			}
 		});
+		t.start();
 	}
 
 	public static void main(String[] args) throws Exception {

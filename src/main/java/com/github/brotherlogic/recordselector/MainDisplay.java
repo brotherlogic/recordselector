@@ -21,11 +21,12 @@ public class MainDisplay extends JFrame {
 
 	public void showRelease(Release r) {
 		try {
-			System.setProperty("https.protocols", "SSLv3");
+			System.setProperty("https.protocols", "TLSv1.2");
 			System.err.println("READING: " + r.getImagesList().get(0).getUri());
 			mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("DONE");
 	}
 }
