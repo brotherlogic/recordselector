@@ -38,8 +38,8 @@ public class Runner extends JavaServer {
 		System.out.println("DISPLAY");
 		mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainDisplay.pack();
-		mainDisplay.setLocationRelativeTo(null);
 		mainDisplay.setSize(new Dimension(800, 480));
+		mainDisplay.setLocationRelativeTo(null);
 		mainDisplay.revalidate();
 		mainDisplay.setVisible(true);
 	}
