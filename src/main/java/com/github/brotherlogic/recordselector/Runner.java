@@ -1,5 +1,6 @@
 package com.github.brotherlogic.recordselector;
 
+import java.awt.Dimension;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Runner extends JavaServer {
 		mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainDisplay.pack();
 		mainDisplay.setLocationRelativeTo(null);
+		mainDisplay.setSize(new Dimension(800, 480));
 		mainDisplay.revalidate();
 		mainDisplay.setVisible(true);
 	}
