@@ -46,11 +46,12 @@ public class Runner extends JavaServer {
 
 	private void refreshDisplay() {
 		while (true) {
-			Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
-			mainDisplay.showRelease(r);
 			try {
+				System.err.println("Refreshing");
+				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
+				mainDisplay.showRelease(r);
 				Thread.sleep(60 * 1000);
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
