@@ -29,6 +29,7 @@ public class ImagePanel extends JPanel {
 
 	@Override
 	public void paint(Graphics g) {
+		super.paint(g);
 		System.out.println("PAINTING");
 		if (img != null) {
 			System.out.println("Scaling Image");
