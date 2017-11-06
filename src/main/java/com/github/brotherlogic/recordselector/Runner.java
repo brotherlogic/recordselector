@@ -47,11 +47,18 @@ public class Runner extends JavaServer {
 	private void refreshDisplay() {
 		while (true) {
 			try {
-				System.err.println("Refreshing");
+				System.out.println("Refreshing");
 				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
+				System.out.println("Got release");
 				mainDisplay.showRelease(r);
-				Thread.sleep(60 * 1000);
+				System.out.println("Showing Release");
 			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+			Thread.sleep(60 * 1000);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
