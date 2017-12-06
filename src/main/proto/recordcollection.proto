@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package recordcollection;
+
+import "godiscogs.proto";
+
+message RecordCollection {
+  repeated Record records = 1;
+  repeated godiscogs.Release wants = 2;
+}
+
+// This is a record that we own
+message Record {
+  godiscogs.Release release = 1;
+  ReleaseMetadata metadata = 2;
+}
+
+// This is the discogs token
+message Token {
+  string token = 1;
+}
+
+message ReleaseMetadata {
+	// The date the release was added
+	int64 date_added = 1;
+
+	// The date the release was last updated
+	int64 date_updated = 2;
+
+  // The relative path to the release
+  string file_path = 3;
+
+	// The cost of the record in pence
+	int32 cost = 4;
+
+	// If we have other copies of this
+	bool others = 5;
+
+	// The id of the release this relates to
+	int32 id = 6;
+
+	// The data we last recached this release
+	int64 last_cache = 7;
+}
+
+// A request to get some records
+message GetRecordsRequest {
+  Record filter = 1;
+}
+
+// A list of records in response
+message GetRecordsResponse {
+  repeated Record records = 1;
+}
+
+message UpdateRecordRequest {
+  Record update = 1;
+}
+
+message UpdateRecordsResponse {
+  Record updated = 1;
+}
+
+service RecordCollectionService {
+  rpc GetRecords(GetRecordsRequest) returns (GetRecordsResponse) {};
+  rpc UpdateRecord(UpdateRecordRequest) returns (UpdateRecordsResponse) {};
+}
