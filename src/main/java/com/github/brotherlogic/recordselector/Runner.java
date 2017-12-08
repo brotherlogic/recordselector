@@ -23,6 +23,7 @@ import io.grpc.BindableService;
 public class Runner extends JavaServer {
 
 	MainDisplay mainDisplay = new MainDisplay();
+	Release oldRelease = null;
 
 	@Override
 	public String getServerName() {
@@ -48,16 +49,18 @@ public class Runner extends JavaServer {
 		while (true) {
 			try {
 				System.out.println("Refreshing");
-				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"));
+				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
+						oldRelease != null && oldRelease.getImagesCount() == 0);
 				System.out.println("Got release");
 				mainDisplay.showRelease(r);
+				oldRelease = r;
 				System.out.println("Showing Release");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
-			Thread.sleep(60 * 1000);
+				Thread.sleep(60 * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

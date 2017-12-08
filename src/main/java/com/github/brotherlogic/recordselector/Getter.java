@@ -10,10 +10,11 @@ import recordgetter.Recordgetter;
 
 public class Getter {
 
-	public Release getRecord(String host, int port) {
+	public Release getRecord(String host, int port, boolean refresh) {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
 		RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
-		Release response = client.getRecord(Recordgetter.Empty.getDefaultInstance()).getRelease();
+		Release response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
+				.getRelease();
 		try {
 			channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
