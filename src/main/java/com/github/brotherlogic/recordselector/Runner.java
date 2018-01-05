@@ -17,6 +17,7 @@ import org.apache.commons.cli.Options;
 
 import com.github.brotherlogic.javaserver.JavaServer;
 
+import godiscogs.Godiscogs.Image;
 import godiscogs.Godiscogs.Release;
 import io.grpc.BindableService;
 
@@ -47,8 +48,14 @@ public class Runner extends JavaServer {
 	private void refreshDisplay() {
 		while (true) {
 			try {
+				String maybeImage = "";
+				for (Image img : oldRelease.getImagesList()) {
+					if (img.getUri().length() > 0) {
+						maybeImage = img.getUri();
+					}
+				}
 				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
-						oldRelease != null && oldRelease.getImagesCount() == 0);
+						oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
 				mainDisplay.showRelease(r);
 				oldRelease = r;
 			} catch (Exception e) {
