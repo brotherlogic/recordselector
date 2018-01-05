@@ -56,6 +56,7 @@ public class Runner extends JavaServer {
 					}
 				}
 				}
+				System.err.println("Sending with " + maybeImage);
 				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
 						oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
 				mainDisplay.showRelease(r);
