@@ -12,6 +12,7 @@ public class Getter {
 
 	public Release getRecord(String host, int port, boolean refresh) {
 		Release response = null;
+		if (host != null) {
 		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
 		try {
 		RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
@@ -24,7 +25,7 @@ public class Getter {
 			channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}}
 		return response;
 	}
 }
