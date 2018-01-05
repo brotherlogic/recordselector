@@ -36,7 +36,6 @@ public class Runner extends JavaServer {
 	}
 
 	private void displayScreen() {
-		System.out.println("DISPLAY");
 		mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainDisplay.pack();
 		mainDisplay.setSize(new Dimension(800, 480));
@@ -48,13 +47,10 @@ public class Runner extends JavaServer {
 	private void refreshDisplay() {
 		while (true) {
 			try {
-				System.out.println("Refreshing");
 				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
 						oldRelease != null && oldRelease.getImagesCount() == 0);
-				System.out.println("Got release");
 				mainDisplay.showRelease(r);
 				oldRelease = r;
-				System.out.println("Showing Release");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -95,7 +91,6 @@ public class Runner extends JavaServer {
 		CommandLine line = parser.parse(options, args);
 
 		String rServer = "192.168.86.42";
-		System.out.println("ARGS = " + Arrays.toString(args));
 		if (line.hasOption("server"))
 			rServer = line.getOptionValue("s");
 

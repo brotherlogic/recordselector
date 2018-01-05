@@ -22,17 +22,13 @@ public class ImagePanel extends JPanel {
 	public void setImage(Image i) {
 		img = i;
 		scaledImg = null;
-		System.out.println("SET IMAGE");
-		System.out.println("SIZINGTON = " + img.getHeight(null));
 		repaint();
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println("PAINTING");
 		if (img != null) {
-			System.out.println("Scaling Image");
 			int imgHeight = img.getHeight(null);
 			int imgWidth = img.getWidth(null);
 
@@ -44,20 +40,17 @@ public class ImagePanel extends JPanel {
 			if (scaledImg == null) {
 				scaledImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
 			}
-			System.out.println("Drawing image");
 			g.drawImage(scaledImg, (this.getWidth() - scaledWidth) / 2, 0, null);
 		}
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		System.out.println("HERE");
 		return new Dimension(480, 480);
 	}
 
 	@Override
 	public Dimension getMaximumSize() {
-		System.out.println("HERE");
 		return getPreferredSize();
 	}
 }
