@@ -10,22 +10,24 @@ import recordgetter.Recordgetter;
 
 public class Getter {
 
-	public Release getRecord(String host, int port, boolean refresh) {
-		Release response = null;
-		if (host != null) {
-		ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
-		try {
-		RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
-		 response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
-				.getRelease();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}}
-		return response;
-	}
+    public Release getRecord(String host, int port, boolean refresh) {
+        Release response = null;
+        if (host != null) {
+            ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
+            try {
+                RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
+                response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
+                        .getRelease();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+
+                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return response;
+    }
 }
