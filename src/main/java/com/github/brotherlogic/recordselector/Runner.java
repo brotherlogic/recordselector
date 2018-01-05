@@ -49,10 +49,12 @@ public class Runner extends JavaServer {
 		while (true) {
 			try {
 				String maybeImage = "";
+				if (oldRelease != null) {
 				for (Image img : oldRelease.getImagesList()) {
 					if (img.getUri().length() > 0) {
 						maybeImage = img.getUri();
 					}
+				}
 				}
 				Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
 						oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
