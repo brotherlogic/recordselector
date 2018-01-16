@@ -10,26 +10,17 @@ import recordgetter.Recordgetter;
 
 public class Getter {
 
-    public Release getRecord(String host, int port, boolean refresh) {
+    public Release getRecord(String host, int port, boolean refresh) throws Exception {
         Release response = null;
         if (host != null) {
             ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
-            try {
-                RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
-                if (refresh) {
-                		System.err.println("Request refresh!");
-                }
-                response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
-                        .getRelease();
-            } catch (Exception e) {
-                e.printStackTrace();
+            RecordGetterGrpc.RecordGetterBlockingStub client = RecordGetterGrpc.newBlockingStub(channel);
+            if (refresh) {
+                System.err.println("Request refresh!");
             }
-            try {
-
-                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
+                    .getRelease();
+            channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
         return response;
     }
