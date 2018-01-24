@@ -19,7 +19,7 @@ public class Getter {
                 System.err.println("Request refresh!");
             }
             response = client.getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build())
-                    .getRelease();
+                    .getRecord().getRelease();
             channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
         return response;
