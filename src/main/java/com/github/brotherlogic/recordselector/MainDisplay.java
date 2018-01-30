@@ -2,6 +2,8 @@ package com.github.brotherlogic.recordselector;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 import godiscogs.Godiscogs.Release;
 
@@ -48,9 +51,26 @@ public class MainDisplay extends JFrame {
 }
 
 class ScorePanel extends JPanel {
+    JToggleButton[] arr = new JToggleButton[5];
+
     public ScorePanel() {
-        for (int i = 1; i < 6; i++) {
-            this.add(new JButton("" + i));
+        for (int i = 0; i < 5; i++) {
+            arr[i] = new JToggleButton("" + (i + 1));
+            this.add(arr[i]);
+            final int index = i;
+            arr[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    reset(index);
+                }
+            });
+        }
+    }
+
+    private void reset(int n) {
+        for (int i = 0; i < arr.length; i++) {
+            if (i != n) {
+                arr[i].setSelected(false);
+            }
         }
     }
 }
