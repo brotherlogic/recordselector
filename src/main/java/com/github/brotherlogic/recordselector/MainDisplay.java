@@ -23,7 +23,7 @@ public class MainDisplay extends JFrame {
     ListensPanel listensPanel;
     DoScorePanel doScorePanel;
 
-    public MainDisplay() {
+    public MainDisplay(Getter g) {
         mainPanel = new ImagePanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(800, 480));
@@ -38,7 +38,7 @@ public class MainDisplay extends JFrame {
         listensPanel = new ListensPanel();
         this.add(listensPanel, BorderLayout.WEST);
 
-        doScorePanel = new DoScorePanel();
+        doScorePanel = new DoScorePanel(scorePanel, g);
         this.add(doScorePanel, BorderLayout.EAST);
     }
 
@@ -52,6 +52,7 @@ public class MainDisplay extends JFrame {
 
 class ScorePanel extends JPanel {
     JToggleButton[] arr = new JToggleButton[5];
+    int selected = -1;
 
     public ScorePanel() {
         for (int i = 0; i < 5; i++) {
@@ -61,9 +62,14 @@ class ScorePanel extends JPanel {
             arr[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     reset(index);
+                    selected = index;
                 }
             });
         }
+    }
+
+    public int getScore() {
+        return selected;
     }
 
     private void reset(int n) {
@@ -90,11 +96,28 @@ class TitlePanel extends JPanel {
 
 class DoScorePanel extends JPanel {
     JButton score;
+    ScorePanel scPanel;
+    Getter g;
 
-    public DoScorePanel() {
+    public DoScorePanel(ScorePanel sc, Getter getter) {
         score = new JButton("Score");
-        score.setEnabled(false);
         this.add(score);
+        scPanel = sc;
+        g = getter;
+
+        score.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int scoreVal = scPanel.getScore();
+                if (scoreVal > 0) {
+                    try {
+                        g.setScore(scoreVal);
+                        score.setEnabled(false);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }
 
