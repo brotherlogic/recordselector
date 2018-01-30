@@ -17,6 +17,7 @@ public class MainDisplay extends JFrame {
     ImagePanel mainPanel;
     ScorePanel scorePanel;
     TitlePanel titlePanel;
+    ListensPanel listensPanel;
 
     public MainDisplay() {
         mainPanel = new ImagePanel();
@@ -29,12 +30,16 @@ public class MainDisplay extends JFrame {
 
         titlePanel = new TitlePanel();
         this.add(titlePanel, BorderLayout.NORTH);
+
+        listensPanel = new ListensPanel();
+        this.add(listensPanel, BorderLayout.WEST);
     }
 
-    public void showRelease(Release r) throws Exception {
+    public void showRelease(Release r, int listens) throws Exception {
         System.setProperty("https.protocols", "TLSv1.2");
         mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
         titlePanel.setTitle(r.getTitle());
+        listensPanel.setListens(listens);
     }
 }
 
@@ -49,12 +54,26 @@ class ScorePanel extends JPanel {
 class TitlePanel extends JPanel {
     JLabel label;
 
-    public void setTitle(String title){
-        label.setText(title);
-    }
-
     public TitlePanel() {
         label = new JLabel();
         this.add(label);
+    }
+
+    public void setTitle(String title) {
+        label.setText(title);
+    }
+}
+
+class ListensPanel extends JPanel {
+    JLabel listens;
+
+    public ListensPanel() {
+        listens = new JLabel("?");
+        this.add(listens);
+    }
+
+    public void setListens(int num) {
+        listens.setText("" + num);
+
     }
 }

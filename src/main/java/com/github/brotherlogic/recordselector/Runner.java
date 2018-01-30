@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import godiscogs.Godiscogs.Image;
 import godiscogs.Godiscogs.Release;
 import io.grpc.BindableService;
+import recordgetter.Recordgetter.GetRecordResponse;
 
 public class Runner extends JavaServer {
 
@@ -72,10 +73,10 @@ public class Runner extends JavaServer {
                         }
                     }
                 }
-                Release r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
+                GetRecordResponse r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
                         oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
-                mainDisplay.showRelease(r);
-                oldRelease = r;
+                mainDisplay.showRelease(r.getRecord().getRelease(), r.getNumListens());
+                oldRelease = r.getRecord().getRelease();
             } catch (Exception e) {
                 // Ignore errors here
             }
