@@ -23,7 +23,7 @@ import recordgetter.Recordgetter.GetRecordResponse;
 
 public class Runner extends JavaServer {
 
-    MainDisplay mainDisplay = new MainDisplay();
+    MainDisplay mainDisplay;
     Release oldRelease = null;
 
     public static void main(String[] args) throws Exception {
@@ -54,6 +54,10 @@ public class Runner extends JavaServer {
     }
 
     private void displayScreen() {
+        if (mainDisplay == null) {
+            mainDisplay = new MainDisplay(new Getter(getHost("recordgetter"), getPort("recordgetter")));
+        }
+
         mainDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainDisplay.pack();
         mainDisplay.setSize(new Dimension(800, 480));
@@ -73,12 +77,15 @@ public class Runner extends JavaServer {
                         }
                     }
                 }
-                GetRecordResponse r = new Getter().getRecord(getHost("recordgetter"), getPort("recordgetter"),
+                GetRecordResponse r = new Getter(getHost("recordgetter"), getPort("recordgetter")).getRecord(
                         oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
-                mainDisplay.showRelease(r.getRecord().getRelease(), r.getNumListens());
-                oldRelease = r.getRecord().getRelease();
+                if (mainDisplay != null) {
+                    mainDisplay.showRelease(r.getRecord().getRelease(), r.getNumListens());
+                    oldRelease = r.getRecord().getRelease();
+                }
             } catch (Exception e) {
                 // Ignore errors here
+                e.printStackTrace();
             }
 
             try {
