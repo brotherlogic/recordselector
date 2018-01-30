@@ -18,6 +18,7 @@ public class MainDisplay extends JFrame {
     ScorePanel scorePanel;
     TitlePanel titlePanel;
     ListensPanel listensPanel;
+    DoScorePanel doScorePanel;
 
     public MainDisplay() {
         mainPanel = new ImagePanel();
@@ -33,6 +34,9 @@ public class MainDisplay extends JFrame {
 
         listensPanel = new ListensPanel();
         this.add(listensPanel, BorderLayout.WEST);
+
+        doScorePanel = new DoScorePanel();
+        this.add(doScorePanel, BorderLayout.EAST);
     }
 
     public void showRelease(Release r, int listens) throws Exception {
@@ -61,6 +65,16 @@ class TitlePanel extends JPanel {
 
     public void setTitle(String title) {
         label.setText(title);
+    }
+}
+
+class DoScorePanel extends JPanel {
+    JButton score;
+
+    public DoScorePanel() {
+        score = new JButton("Score");
+        score.setEnabled(false);
+        this.add(score);
     }
 }
 
