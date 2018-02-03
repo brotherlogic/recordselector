@@ -44,7 +44,11 @@ public class MainDisplay extends JFrame {
 
     public void showRelease(Release r, int listens) throws Exception {
         System.setProperty("https.protocols", "TLSv1.2");
-        mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
+        if (r.getImagesList().size() > 0) {
+            mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
+        } else {
+            mainPanel.setImage(null);
+        }
         titlePanel.setTitle(r.getTitle());
         listensPanel.setListens(listens);
     }
