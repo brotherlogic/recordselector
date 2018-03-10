@@ -84,6 +84,8 @@ public class Runner extends JavaServer {
                 if (mainDisplay != null) {
                     if (r.getRecord().getMetadata().getCategory() == Category.STAGED_TO_SELL)
                        mainDisplay.showRelease(r.getRecord().getRelease(), Color.RED);
+		    else if (r.getRecord().getMetadata().getCategory() == Category.PRE_FRESHMAN)
+			mainDisplay.showRelease(r.getRecord().getRelease(), Color.YELLOW);
                     else
                         mainDisplay.showRelease(r.getRecord().getRelease(), Color.GREEN);
                     oldRelease = r.getRecord().getRelease();
