@@ -9,6 +9,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.swing.SwingUtilities;
 
 import godiscogs.Godiscogs.Image;
 import godiscogs.Godiscogs.Release;
+import recordcollection.Recordcollection.ReleaseMetadata.Category;
 import io.grpc.BindableService;
 import recordgetter.Recordgetter.GetRecordResponse;
 
@@ -80,7 +82,10 @@ public class Runner extends JavaServer {
                 GetRecordResponse r = new Getter(getHost("recordgetter"), getPort("recordgetter")).getRecord(
                         oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
                 if (mainDisplay != null) {
-                    mainDisplay.showRelease(r.getRecord().getRelease(), r.getNumListens());
+                    if (r.getRecord().getMetadata().getCategory() == Category.STAGED_TO_SELL)
+                       mainDisplay.showRelease(r.getRecord().getRelease(), Color.RED);
+                    else
+                        mainDisplay.showRelease(r.getRecord().getRelease(), Color.GREEN);
                     oldRelease = r.getRecord().getRelease();
                 }
             } catch (Exception e) {
