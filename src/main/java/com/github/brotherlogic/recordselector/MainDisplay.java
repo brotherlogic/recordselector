@@ -1,6 +1,7 @@
 package com.github.brotherlogic.recordselector;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +43,7 @@ public class MainDisplay extends JFrame {
         this.add(doScorePanel, BorderLayout.EAST);
     }
 
-    public void showRelease(Release r, int listens) throws Exception {
+    public void showRelease(Release r, Color color) throws Exception {
         System.setProperty("https.protocols", "TLSv1.2");
         if (r.getImagesList().size() > 0) {
             mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
@@ -50,7 +51,7 @@ public class MainDisplay extends JFrame {
             mainPanel.setImage(null);
         }
         titlePanel.setTitle(r.getTitle());
-        listensPanel.setListens(listens);
+        listensPanel.setListens(color);
     }
 }
 
@@ -126,15 +127,10 @@ class DoScorePanel extends JPanel {
 }
 
 class ListensPanel extends JPanel {
-    JLabel listens;
-
     public ListensPanel() {
-        listens = new JLabel("?");
-        this.add(listens);
-    }
+     }
 
-    public void setListens(int num) {
-        listens.setText("" + num);
-
+    public void setListens(Color color) {
+        this.setBackground(color);
     }
 }
