@@ -43,14 +43,14 @@ public class MainDisplay extends JFrame {
         this.add(doScorePanel, BorderLayout.EAST);
     }
 
-    public void showRelease(Release r, Color color) throws Exception {
+    public void showRelease(Release r, Color color, int disk) throws Exception {
         System.setProperty("https.protocols", "TLSv1.2");
         if (r.getImagesList().size() > 0) {
             mainPanel.setImage(ImageIO.read(new URL(r.getImagesList().get(0).getUri())));
         } else {
             mainPanel.setImage(null);
         }
-        titlePanel.setTitle(r.getTitle());
+        titlePanel.setTitle(r.getTitle() + "[" + disk + "]");
         listensPanel.setListens(color);
     }
 }

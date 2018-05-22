@@ -83,11 +83,11 @@ public class Runner extends JavaServer {
                         oldRelease != null && (oldRelease.getImagesCount() == 0 || maybeImage.length() == 0));
                 if (mainDisplay != null) {
                     if (r.getRecord().getMetadata().getCategory() == Category.STAGED_TO_SELL)
-                       mainDisplay.showRelease(r.getRecord().getRelease(), Color.RED);
+			mainDisplay.showRelease(r.getRecord().getRelease(), Color.RED, r.getDisk());
 		    else if (r.getRecord().getMetadata().getCategory() == Category.PRE_FRESHMAN)
-			mainDisplay.showRelease(r.getRecord().getRelease(), Color.YELLOW);
+			mainDisplay.showRelease(r.getRecord().getRelease(), Color.YELLOW, r.getDisk());
                     else
-                        mainDisplay.showRelease(r.getRecord().getRelease(), Color.GREEN);
+                        mainDisplay.showRelease(r.getRecord().getRelease(), Color.GREEN, r.getDisk());
                     oldRelease = r.getRecord().getRelease();
                 }
             } catch (Exception e) {
