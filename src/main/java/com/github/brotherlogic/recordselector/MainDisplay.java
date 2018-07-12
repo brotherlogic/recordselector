@@ -50,7 +50,7 @@ public class MainDisplay extends JFrame {
         } else {
             mainPanel.setImage(null);
         }
-        titlePanel.setTitle(r.getTitle() + "[" + disk + "]");
+        titlePanel.setTitle(r.getTitle() + "[" + disk + "/" + r.getFormatQuantity() + "]");
         listensPanel.setListens(color);
     }
 }
