@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import godiscogs.Godiscogs.Release;
+import godiscogs.Godiscogs.Label;
 
 public class MainDisplay extends JFrame {
 
@@ -50,7 +51,11 @@ public class MainDisplay extends JFrame {
         } else {
             mainPanel.setImage(null);
         }
-        titlePanel.setTitle(r.getTitle() + "[" + disk + "/" + r.getFormatQuantity() + "]");
+	String labelString = "";
+	for (Label l : r.getLabelsList()) {
+	    labelString += l.getName() + ", ";
+	}
+        titlePanel.setTitle(r.getTitle() + "("+labelString+")[" + disk + "/" + r.getFormatQuantity() + "]");
         listensPanel.setListens(color);
     }
 }
