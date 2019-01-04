@@ -4,5 +4,11 @@ branches:
   only:
   - master
 
+jdk:
+ - openjdk10
+
 before_install:
 - ./look_for_logs.sh
+
+after_success:
+- ./gradlew cobertura coveralls
