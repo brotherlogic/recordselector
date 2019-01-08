@@ -55,6 +55,11 @@ public class MainDisplay extends JFrame {
 	for (Label l : r.getLabelsList()) {
 	    labelString += l.getName() + ", ";
 	}
+
+	if (labelString.length() > 0) {
+        labelString = labelString.substring(0,labelString.length()-2);
+    }
+
         titlePanel.setTitle(r.getTitle() + "("+labelString+")[" + disk + "/" + r.getFormatQuantity() + "]");
         listensPanel.setListens(color);
     }
