@@ -26,8 +26,11 @@ public class Getter {
             if (refresh) {
                 System.err.println("Request refresh!");
             }
+	    try{
             response = client.withDeadlineAfter(30, TimeUnit.SECONDS).getRecord(Recordgetter.GetRecordRequest.newBuilder().setRefresh(refresh).build());
+	    } finally {
             channel.shutdown().awaitTermination(30, TimeUnit.SECONDS);
+	    }
         }
         return response;
     }
