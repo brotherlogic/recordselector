@@ -42,6 +42,7 @@ public class Runner extends JavaServer {
             rServer = line.getOptionValue("s");
 
         Runner r = new Runner();
+	r.setTime(7, 19);
         r.Serve(rServer);
     }
 
